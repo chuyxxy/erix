@@ -4,7 +4,7 @@ import playerMove from "./Scenes/Player";
 const SHARED_CONFIG ={
 
   width : 800,
-  height: 600,
+  height: 450,
 }
 
 const config = {
