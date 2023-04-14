@@ -15,7 +15,7 @@ class Scene extends Phaser.Scene{
     }
       
     create () {
-        this.add.image(0, 0, "Moon-night.jpg").setOrigin(0);
+        this.add.image(0, 0, "Moon-night").setOrigin(0);
 
         this.bird = this.add.sprite(100, this.config.height/2,"bird")
     }
