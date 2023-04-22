@@ -6,24 +6,25 @@ class playerMove extends Phaser.GameObjects.Sprite{
         this.scene = scene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        scene.input.keyboard.on("keydown-W", this.Movey, this);
         scene.input.keyboard.on("keydown-A", this.Movex, this);
-        scene.input.keyboard.on("keydown-S", this.Moveyy, this);
+        scene.input.keyboard.on("keyup-A", this.zeroMove, this);
         scene.input.keyboard.on("keydown-D", this.Movexx, this);
+        scene.input.keyboard.on("keyup-D", this.zeroMove, this);
+        this.body.checkCollision.up = false;
+        this.body.checkCollision.left = false;
+        this.body.checkCollision.right = false;
+        this.body.gravity.y = 500;
     }
 
     Movex(){
-        this.body.velocity.x =50;
+        this.body.velocity.x =-200;
     }
-        Movexx(){
-        this.body.velocity.x = -50;
+    zeroMove(){
+        this.body.velocity.x =0;
     }
-        Movey(){
-        this.body.velocity.y = 50;
+    Movexx(){
+        this.body.velocity.x =200;
     }
-        Moveyy(){
-        this.body.velocity.y = -50;
-    }
-    
+ 
 }
 export default playerMove;
