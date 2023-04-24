@@ -1,10 +1,11 @@
+import { Scenes } from "phaser";
 import playerMove from "./Player";
 
 var bird = null;
-//var tiles;
 var floor;
+var tile;
+var platformsTraveled;
 class Scene extends Phaser.Scene{
-    //player;
     constructor(config){
         super();
         this.config = config;
@@ -21,50 +22,55 @@ class Scene extends Phaser.Scene{
     
     create () {
         this.add.image(0, 0, "color").setOrigin(0);
-        this.Player = new playerMove(this,100,150,"bird");
+        this.Player = new playerMove(this,145,400,"bird");
         this.Floor();
-        // floor.FloorPos();
-        // floor.scale = 6;
-        //this.platformCreate();
-        //this,this.platformCreate();
-        
-        //this.physics.add.collider(this.Player,tiles,this.GameOver,null,this);
-        
-        this.cameraYMin = 99999;
-		//this.tileYMin = 99999;
-        //platformCreate(){}
         this.cursors = this.input.keyboard.createCursorKeys();
+        platformsTraveled = 0;
+        
     }
     
     Floor()
     {
         floor = this.physics.add.image(150,450,"floor1")
+        tile = this.physics.add.image(150,350,"floor")
         floor.body.immovable = true;
+        tile.body.immovable = true;
         
     }
     
-    Platforms()
-    {
-        this.platforms = this.add.group();
-        this.body.enableBody = true;
-    }
+    
     update()
-    {
+    { 
         this.physics.add.collider(this.Player,floor);
+        this.physics.add.collider(this.Player,tile,this.bounceBack,null,this);
         
         if(this.cursors.space.isDown && this.Player.body.touching.down && floor.body.touching.up)
         {
-            this.Player.body.velocity.y = -300;
+            this.Player.body.velocity.y = -350;
         }
-         /* if(this.Player.body.touching.down && this.platforms.body.touching.up)
-          {
-              this.Player.body.velocity.y = -300;
-          }*/
         
-        //this.world.setBounds( 0, -this.Player.yChange, this.world.width, this.game.height + this.Player.yChange );
-        // this.cameraYMin = Math.min( this.cameraYMin, this.body.y - this.scene.height + 130 );
-        //this.camera.y = this.cameraYMin;
+        if(platformsTraveled >0 && this.Player.body.touching.down && floor.body.touching.up)
+        {
+            this.gameOver();
+            floor.body.immovable = false;
+        }
+
+        this.physics.world.wrap(this.Player, 4);
         
+    }
+    bounceBack()
+    {
+        if(this.Player.body.touching.down && tile.body.touching.up)
+        {
+            this.Player.body.velocity.y = -300;
+            platformsTraveled=+1;
+        }
+        
+    }
+    gameOver()
+    {
+        alert("Game Over");
+        this.scene.restart(Scenes);
     }
 
 }     

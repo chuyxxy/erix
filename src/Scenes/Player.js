@@ -14,6 +14,7 @@ class playerMove extends Phaser.GameObjects.Sprite{
         this.body.checkCollision.left = false;
         this.body.checkCollision.right = false;
         this.body.gravity.y = 500;
+        //yChange = 0;
     }
 
     Movex(){

@@ -14,8 +14,10 @@ const config = {
     debug:false,
     
   }
+  
   },
   scene:[new Scene(SHARED_CONFIG)]
+  
 };
 
 new Phaser.Game(config);
